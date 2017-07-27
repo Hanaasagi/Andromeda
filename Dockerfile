@@ -9,4 +9,5 @@ RUN apk update && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 
 
+ENTRYPOINT []
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
