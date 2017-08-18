@@ -6,8 +6,8 @@ RUN apk update && \
     /usr/local/openresty/luajit/bin/luarocks install lyaml && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-http && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-iputils && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
-
+    /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
+    /usr/local/openresty/luajit/bin/luarocks install busted
 
 ENTRYPOINT []
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
