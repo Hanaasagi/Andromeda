@@ -1,7 +1,9 @@
 #!/bin/bash
 
+openrestyhome="/usr/local/openresty"
+
 resty \
-    -I /usr/local/openresty/lua_script/module \
-       /usr/local/openresty/tests/busted_runner.lua  \
-    --verbose /usr/local/openresty/tests/test_logger.lua
+    -I ${openrestyhome}/andromeda/module \
+       ${openrestyhome}/tests/busted_runner.lua  \
+    --verbose ${openrestyhome}/tests/test_logger.lua
 

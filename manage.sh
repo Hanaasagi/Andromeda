@@ -5,9 +5,10 @@ image="andromeda"
 name="andromeda"
 confdir="${PWD}/conf"
 logdir="/data/${name}/logs"
-scriptdir="${PWD}/lua_script"
+scriptdir="${PWD}/andromeda"
 setting="${PWD}/setting"
 testsdir="${PWD}/tests"
+openrestyhome="/usr/local/openresty"
 
 build() {
     docker build -t ${image} .
@@ -18,10 +19,10 @@ start() {
     stop
 
     docker run -d --name ${name} \
-        -v ${confdir}:/usr/local/openresty/nginx/conf \
-        -v ${logdir}:/usr/local/openresty/nginx/logs \
-        -v ${scriptdir}:/usr/local/openresty/lua_script\
-        -v ${setting}:/usr/local/openresty/setting \
+        -v ${confdir}:${openrestyhome}/nginx/conf \
+        -v ${logdir}:${openrestyhome}/nginx/logs \
+        -v ${scriptdir}:${openrestyhome}/andromeda\
+        -v ${setting}:${openrestyhome}/setting \
         --net=host \
         ${image}
 }
@@ -33,25 +34,24 @@ stop() {
 
 test() {
 
-    docker run --name ${name} \
-        -v ${confdir}:/usr/local/openresty/nginx/conf \
-        -v ${logdir}:/usr/local/openresty/nginx/logs \
-        -v ${scriptdir}:/usr/local/openresty/lua_script\
-        -v ${setting}:/usr/local/openresty/setting \
-        -v ${testsdir}:/usr/local/openresty/tests \
+    docker run --rm --name ${name}-test \
+        -v ${confdir}:${openrestyhome}/nginx/conf \
+        -v ${logdir}:${openrestyhome}/nginx/logs \
+        -v ${scriptdir}:${openrestyhome}/andromeda\
+        -v ${setting}:${openrestyhome}/setting \
+        -v ${testsdir}:${openrestyhome}/tests \
         --net=host \
         ${image} \
-        sh /usr/local/openresty/tests/run_tests.sh
+        sh ${openrestyhome}/tests/run_tests.sh
 }
 
 shell() {
 
-    docker run -it --rm --name ${name} \
-        -v ${confdir}:/usr/local/openresty/nginx/conf \
-        -v ${logdir}:/usr/local/openresty/nginx/logs \
-        -v ${scriptdir}:/usr/local/openresty/lua_script\
-        -v ${setting}:/usr/local/openresty/setting \
-        -v ${testsdir}:/usr/local/openresty/tests \
+    docker run -it --rm --name ${name}-shell \
+        -v ${confdir}:${openrestyhome}/nginx/conf \
+        -v ${logdir}:${openrestyhome}/nginx/logs \
+        -v ${scriptdir}:${openrestyhome}/andromeda\
+        -v ${setting}:${openrestyhome}/setting \
         --net=host \
         ${image} \
         /bin/ash
