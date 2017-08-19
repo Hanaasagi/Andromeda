@@ -1,0 +1,8 @@
+sudo: true
+
+services:
+  - docker
+
+script:
+  - ./manage.sh build
+  - ./manage.sh test
