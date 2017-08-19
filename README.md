@@ -11,3 +11,9 @@ no description yet
 
 ##### stop
 `./manage.sh stop`
+
+##### test
+`./manage.sh test`
+
+#### shell
+`./manage.sh shell`
